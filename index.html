@@ -218,7 +218,7 @@ const messageBox = document.getElementById("messageBox");
  form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  if (!SCRIPT_URL || SCRIPT_URL.includes("https://script.google.com/macros/s/AKfycbxXjQAsxrjnXhomZMBTf851K51_AW_f6iDDHHw39BiqyN51aY-po4L5fG4mZo-6--er/exec")) {
+  if (!SCRIPT_URL || SCRIPT_URL.includes("https://script.google.com/macros/s/AKfycbybxmCPvqbYNy6Ab_2_ywOuGnEPZk_GhMV2akQd444hIGFLonbfEqBhlmYHV30SodX2/exec")) {
     showMessage("Deployment Error: Set SCRIPT_URL to your Apps Script /exec URL.", "error");
     return;
   }
