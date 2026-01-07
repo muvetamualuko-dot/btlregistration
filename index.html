@@ -4,8 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BTL Welfare Registration</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
+   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
     body { font-family: 'Inter', sans-serif; }
     .form-input{
@@ -199,72 +198,71 @@
   </div>
 
   <script>
-    // PASTE your Apps Script Web App /exec URL:
- const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz6G4NEtQ6xwsJHiiJwAQ7a1IkGMndt5hDoszyGt-rS81DjBZDe6-2siKSQ2CB6_zea/exec";
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz6G4NEtQ6xwsJHiiJwAQ7a1IkGMndt5hDoszyGt-rS81DjBZDe6-2siKSQ2CB6_zea/exec";
 
-// HARD PROOF this file is live:
-document.body.insertAdjacentHTML(
-  "afterbegin",
-  `<div style="position:fixed;top:0;left:0;right:0;z-index:999999;background:#111;color:#0f0;padding:8px;font:12px monospace;">
-     LIVE BUILD CHECK: ${new Date().toISOString()} — ${SCRIPT_URL}
-   </div>`
-);
+  // LIVE BUILD CHECK (keep while testing)
+  document.body.insertAdjacentHTML(
+    "afterbegin",
+    `<div style="position:fixed;top:0;left:0;right:0;z-index:999999;background:#111;color:#0f0;padding:8px;font:12px monospace;">
+      LIVE BUILD CHECK: ${new Date().toISOString()} — ${SCRIPT_URL}
+    </div>`
+  );
 
-    const form = document.getElementById('registrationForm');
-    const submitBtn = document.getElementById('submitBtn');
-    const btnText = document.getElementById('btnText');
-    const btnLoader = document.getElementById('btnLoader');
-    const messageBox = document.getElementById('messageBox');
+  const form = document.getElementById("registrationForm");
+  const submitBtn = document.getElementById("submitBtn");
+  const btnText = document.getElementById("btnText");
+  const btnLoader = document.getElementById("btnLoader");
+  const messageBox = document.getElementById("messageBox");
 
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-      if (!SCRIPT_URL || SCRIPT_URL.includes("https://script.google.com/macros/s/AKfycbz6G4NEtQ6xwsJHiiJwAQ7a1IkGMndt5hDoszyGt-rS81DjBZDe6-2siKSQ2CB6_zea/exec")) {
-        showMessage("Deployment Error: Paste your Google Apps Script Web App /exec URL into SCRIPT_URL.", "error");
-        return;
-      }
-
-      submitBtn.disabled = true;
-      btnText.textContent = "Processing...";
-      btnLoader.classList.remove('hidden');
-      messageBox.classList.add('hidden');
-
-      try {
-        const fd = new FormData(form);
-        const payload = Object.fromEntries(fd.entries());
-
-        const res = await fetch(SCRIPT_URL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json", "Accept": "application/json" },
-          body: JSON.stringify(payload)
-        });
-
-        const json = await res.json();
-        if (!res.ok || json.result !== "success") {
-          throw new Error(json.error || "Submission failed");
-        }
-
-        showMessage("Success! Your registration has been submitted successfully.", "success");
-        form.reset();
-
-      } catch (err) {
-        console.error(err);
-        showMessage("Submission failed: " + err.message, "error");
-      } finally {
-        submitBtn.disabled = false;
-        btnText.textContent = "Submit Registration";
-        btnLoader.classList.add('hidden');
-      }
-    });
-
-    function showMessage(text, type) {
-      messageBox.textContent = text;
-      messageBox.classList.remove('hidden', 'bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800');
-      if (type === 'success') messageBox.classList.add('bg-green-100', 'text-green-800');
-      else messageBox.classList.add('bg-red-100', 'text-red-800');
-      messageBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    // Strong validation only
+    if (!SCRIPT_URL || !SCRIPT_URL.startsWith("https://script.google.com/macros/s/") || !SCRIPT_URL.endsWith("/exec")) {
+      showMessage("Invalid backend URL configured.", "error");
+      return;
     }
-  </script>
+
+    submitBtn.disabled = true;
+    btnText.textContent = "Processing...";
+    btnLoader.classList.remove("hidden");
+    messageBox.classList.add("hidden");
+
+    try {
+      const formData = new FormData(form);
+
+      // IMPORTANT: no custom headers (avoids CORS preflight)
+      const res = await fetch(SCRIPT_URL, {
+        method: "POST",
+        body: formData
+      });
+
+      const json = await res.json().catch(() => null);
+      if (!json || json.result !== "success") {
+        throw new Error((json && json.error) ? json.error : "Server did not confirm success.");
+      }
+
+      showMessage("Success! Your registration has been submitted successfully.", "success");
+      form.reset();
+
+    } catch (err) {
+      console.error(err);
+      showMessage("Submission failed: " + err.message, "error");
+    } finally {
+      submitBtn.disabled = false;
+      btnText.textContent = "Submit Registration";
+      btnLoader.classList.add("hidden");
+    }
+  });
+
+  function showMessage(text, type) {
+    messageBox.textContent = text;
+    messageBox.classList.remove("hidden", "bg-green-100", "text-green-800", "bg-red-100", "text-red-800");
+    if (type === "success") messageBox.classList.add("bg-green-100", "text-green-800");
+    else messageBox.classList.add("bg-red-100", "text-red-800");
+    messageBox.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+</script>
 
 </body>
 </html>
