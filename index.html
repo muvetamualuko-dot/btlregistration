@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script src="https://cdn.tailwindcss.com"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BTL Welfare Registration</title>
@@ -198,9 +199,10 @@
   </div>
 
   <script>
-  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwB6cPmKRXMK9StRqy9BL3tEIpLoA_dHW2SkD9uXxMHDKeiSJ24WKRw5F68wo9_aTBK/exec";
+  // USE THE WORKING /exec URL THAT RETURNS {"ok":true,...} IN YOUR BROWSER
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz6G4NEtQ6xwsJHiiJwAQ7a1IkGMndt5hDoszyGt-rS81DjBZDe6-2siKSQ2CB6_zea/exec";
 
-  // LIVE BUILD CHECK (keep while testing)
+  // Live proof
   document.body.insertAdjacentHTML(
     "afterbegin",
     `<div style="position:fixed;top:0;left:0;right:0;z-index:999999;background:#111;color:#0f0;padding:8px;font:12px monospace;">
@@ -208,47 +210,65 @@
     </div>`
   );
 
- 
-const form = document.getElementById("registrationForm");
-const submitBtn = document.getElementById("submitBtn");
-const btnText = document.getElementById("btnText");
-const btnLoader = document.getElementById("btnLoader");
-const messageBox = document.getElementById("messageBox");
+  const form = document.getElementById("registrationForm");
+  const submitBtn = document.getElementById("submitBtn");
+  const btnText = document.getElementById("btnText");
+  const btnLoader = document.getElementById("btnLoader");
+  const messageBox = document.getElementById("messageBox");
 
- form.addEventListener("submit", async (e) => {
-  e.preventDefault();
+  // Create a hidden iframe to receive the submission response
+  const iframe = document.createElement("iframe");
+  iframe.name = "hidden_iframe";
+  iframe.style.display = "none";
+  document.body.appendChild(iframe);
 
-  if (!SCRIPT_URL || !SCRIPT_URL.startsWith("https://script.google.com/macros/s/") || !SCRIPT_URL.endsWith("/exec")) {
-    showMessage("Invalid backend URL configured.", "error");
-    return;
-  }
+  let submitted = false;
 
-  submitBtn.disabled = true;
-  btnText.textContent = "Processing...";
-  btnLoader.classList.remove("hidden");
-  messageBox.classList.add("hidden");
+  iframe.addEventListener("load", () => {
+    if (!submitted) return; // ignore initial load
+    submitted = false;
 
-  try {
-    const formData = new FormData(form);
-
-    // GitHub Pages -> Apps Script: avoid CORS by using no-cors.
-    await fetch(SCRIPT_URL, {
-      method: "POST",
-      body: formData,
-      mode: "no-cors"
-    });
-
-    showMessage("Submitted. Please confirm your details appear in the Google Sheet.", "success");
+    // If doPost runs, the iframe loads a response -> we treat that as success signal
+    showMessage("Submitted successfully. Please check the Google Sheet for the new entry.", "success");
     form.reset();
-  } catch (err) {
-    console.error(err);
-    showMessage("Submission failed: " + err.message, "error");
-  } finally {
+
     submitBtn.disabled = false;
     btnText.textContent = "Submit Registration";
     btnLoader.classList.add("hidden");
-  }
-});
+  });
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    // Strong validation
+    if (!SCRIPT_URL || !SCRIPT_URL.startsWith("https://script.google.com/macros/s/") || !SCRIPT_URL.endsWith("/exec")) {
+      showMessage("Invalid backend URL configured.", "error");
+      return;
+    }
+
+    submitBtn.disabled = true;
+    btnText.textContent = "Processing...";
+    btnLoader.classList.remove("hidden");
+    messageBox.classList.add("hidden");
+
+    // Submit like a normal HTML form (no CORS issues)
+    form.action = SCRIPT_URL;
+    form.method = "POST";
+    form.target = "hidden_iframe";
+
+    submitted = true;
+    form.submit();
+
+    // Safety timeout: if iframe doesn't load, something blocked the request
+    setTimeout(() => {
+      if (!submitted) return;
+      submitted = false;
+      submitBtn.disabled = false;
+      btnText.textContent = "Submit Registration";
+      btnLoader.classList.add("hidden");
+      showMessage("Submission may have been blocked. Check Apps Script → Executions. If none, the endpoint is still not reachable.", "error");
+    }, 12000);
+  });
 
   function showMessage(text, type) {
     messageBox.textContent = text;
@@ -258,6 +278,7 @@ const messageBox = document.getElementById("messageBox");
     messageBox.scrollIntoView({ behavior: "smooth", block: "center" });
   }
 </script>
+
 
 </body>
 </html>
