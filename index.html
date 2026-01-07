@@ -218,8 +218,8 @@ const messageBox = document.getElementById("messageBox");
  form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  if (!SCRIPT_URL || SCRIPT_URL.includes("https://script.google.com/macros/s/AKfycbybxmCPvqbYNy6Ab_2_ywOuGnEPZk_GhMV2akQd444hIGFLonbfEqBhlmYHV30SodX2/exec")) {
-    showMessage("Deployment Error: Set SCRIPT_URL to your Apps Script /exec URL.", "error");
+  if (!SCRIPT_URL || !SCRIPT_URL.startsWith("https://script.google.com/macros/s/") || !SCRIPT_URL.endsWith("/exec")) {
+    showMessage("Invalid backend URL configured.", "error");
     return;
   }
 
@@ -231,15 +231,15 @@ const messageBox = document.getElementById("messageBox");
   try {
     const formData = new FormData(form);
 
+    // GitHub Pages -> Apps Script: avoid CORS by using no-cors.
     await fetch(SCRIPT_URL, {
       method: "POST",
       body: formData,
-      mode: "no-cors" // IMPORTANT for GitHub Pages -> Apps Script
+      mode: "no-cors"
     });
 
-    showMessage("Submitted. If it doesn't appear in the sheet, check Apps Script → Executions for errors.", "success");
+    showMessage("Submitted. Please confirm your details appear in the Google Sheet.", "success");
     form.reset();
-
   } catch (err) {
     console.error(err);
     showMessage("Submission failed: " + err.message, "error");
@@ -249,7 +249,6 @@ const messageBox = document.getElementById("messageBox");
     btnLoader.classList.add("hidden");
   }
 });
-
 
   function showMessage(text, type) {
     messageBox.textContent = text;
