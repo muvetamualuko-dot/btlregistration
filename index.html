@@ -1,228 +1,260 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BTL Welfare Registration</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
-        body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; }
-        .step-hidden { display: none; }
-        #signature-pad { border: 2px dashed #ccc; background: white; cursor: crosshair; touch-action: none; }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BTL Welfare Registration</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+    body { font-family: 'Inter', sans-serif; }
+    .form-input{
+      width:100%;
+      padding:.75rem 1rem;
+      border-radius:.75rem;
+      border:1px solid #d1d5db;
+      outline:none;
+      transition:all .2s ease;
+    }
+    .form-input:focus{
+      border-color:transparent;
+      box-shadow:0 0 0 2px #2563eb;
+    }
+    .loader { border-top-color:#2563eb; animation: spinner 1.0s linear infinite; }
+    @keyframes spinner { 0%{transform:rotate(0)} 100%{transform:rotate(360deg)} }
+  </style>
 </head>
-<body class="min-h-screen py-8 px-4">
 
-    <div class="max-w-2xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden">
-        <!-- Header -->
-        <div class="bg-blue-600 p-6 text-white text-center">
-            <h1 class="text-2xl font-bold">BTL Welfare Group</h1>
-            <p class="text-blue-100">Membership Registration Portal</p>
-        </div>
-
-        <!-- Progress Bar -->
-        <div class="w-full bg-gray-200 h-2">
-            <div id="progress" class="bg-blue-500 h-2 transition-all duration-300" style="width: 25%"></div>
-        </div>
-
-        <form id="registrationForm" class="p-8">
-            
-            <!-- Step 1: Personal Info -->
-            <div id="step1" class="space-y-4">
-                <h2 class="text-xl font-semibold text-gray-800 border-b pb-2">Personal Information</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Full Name</label>
-                        <input type="text" name="fullName" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">ID/Passport Number</label>
-                        <input type="text" name="idNumber" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Gender</label>
-                        <select name="gender" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
-                            <option>Male</option>
-                            <option>Female</option>
-                            <option>Other</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Date of Birth</label>
-                        <input type="date" name="dob" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
-                    </div>
-                </div>
-                <button type="button" onclick="nextStep(2)" class="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition">Continue to Contact Details</button>
-            </div>
-
-            <!-- Step 2: Contact & Residence -->
-            <div id="step2" class="step-hidden space-y-4">
-                <h2 class="text-xl font-semibold text-gray-800 border-b pb-2">Contact & Residence</h2>
-                <div class="space-y-4">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Phone Number</label>
-                        <input type="tel" name="phone" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Email Address</label>
-                        <input type="email" name="email" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Physical Residence</label>
-                        <textarea name="residence" rows="2" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border"></textarea>
-                    </div>
-                </div>
-                <div class="flex gap-4">
-                    <button type="button" onclick="nextStep(1)" class="w-1/3 bg-gray-200 text-gray-700 py-3 rounded-lg font-semibold hover:bg-gray-300 transition">Back</button>
-                    <button type="button" onclick="nextStep(3)" class="w-2/3 bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition">Next: Kin Details</button>
-                </div>
-            </div>
-
-            <!-- Step 3: Next of Kin -->
-            <div id="step3" class="step-hidden space-y-4">
-                <h2 class="text-xl font-semibold text-gray-800 border-b pb-2">Next of Kin Information</h2>
-                <div class="space-y-4">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Kin Full Name</label>
-                        <input type="text" name="kinName" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
-                    </div>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700">Relationship</label>
-                            <input type="text" name="kinRelation" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700">Kin Contact</label>
-                            <input type="tel" name="kinPhone" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
-                        </div>
-                    </div>
-                </div>
-                <div class="flex gap-4">
-                    <button type="button" onclick="nextStep(2)" class="w-1/3 bg-gray-200 text-gray-700 py-3 rounded-lg font-semibold hover:bg-gray-300 transition">Back</button>
-                    <button type="button" onclick="nextStep(4)" class="w-2/3 bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition">Next: Consent</button>
-                </div>
-            </div>
-
-            <!-- Step 4: Declaration & Signature -->
-            <div id="step4" class="step-hidden space-y-4">
-                <h2 class="text-xl font-semibold text-gray-800 border-b pb-2">Declaration</h2>
-                <div class="bg-blue-50 p-4 rounded-lg text-sm text-blue-800 leading-relaxed">
-                    I hereby apply for membership in the BTL Welfare Association. I agree to abide by the BTL constitution and code of conduct. I agree to pay the member fees of <strong>Ksh 5,000</strong> to M-Pesa Paybill <strong>880100</strong> Account <strong>1006602438</strong>.
-                </div>
-                
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Signature (Draw below)</label>
-                    <canvas id="signature-pad" width="500" height="150" class="w-full rounded-md"></canvas>
-                    <button type="button" onclick="clearSignature()" class="mt-2 text-xs text-red-600 hover:underline">Clear Signature</button>
-                </div>
-
-                <div class="flex items-start">
-                    <input type="checkbox" name="consent" required class="mt-1 mr-2">
-                    <label class="text-sm text-gray-600">I confirm that all information provided is true and I accept the membership terms.</label>
-                </div>
-
-                <div class="flex gap-4">
-                    <button type="button" onclick="nextStep(3)" class="w-1/3 bg-gray-200 text-gray-700 py-3 rounded-lg font-semibold hover:bg-gray-300 transition">Back</button>
-                    <button type="submit" id="submitBtn" class="w-2/3 bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition">Complete Registration</button>
-                </div>
-            </div>
-        </form>
-
-        <!-- Loading Overlay -->
-        <div id="loading" class="step-hidden absolute inset-0 bg-white/80 flex items-center justify-center z-50">
-            <div class="text-center">
-                <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-                <p class="mt-4 text-gray-600 font-medium">Submitting your application...</p>
-            </div>
-        </div>
-
-        <!-- Success Message -->
-        <div id="success" class="step-hidden p-8 text-center space-y-4">
-            <div class="text-green-500 text-6xl">✓</div>
-            <h2 class="text-2xl font-bold text-gray-800">Application Received!</h2>
-            <p class="text-gray-600">Thank you for joining BTL Welfare. We have sent your details to the office for approval.</p>
-            <button onclick="location.reload()" class="text-blue-600 font-medium">Submit another application</button>
-        </div>
+<body class="bg-slate-50 min-h-screen py-12 px-4">
+  <div class="max-w-3xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden">
+    <div class="bg-blue-900 px-8 py-10 text-white text-center">
+      <h1 class="text-3xl font-bold uppercase tracking-wider">BTL Welfare Group</h1>
+      <p class="text-blue-200 mt-2 font-light">Membership Registration Form</p>
     </div>
 
-    <script>
-        // --- CONFIGURATION ---
-        // STEP 4: PASTE YOUR GOOGLE WEB APP URL BELOW
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz1E3caPwUki4braeyhcA18DJN_VK4KhBvfVvixGDw/dev";
+    <form id="registrationForm" class="p-8 space-y-10">
+      <!-- SECTION A -->
+      <section>
+        <h2 class="text-lg font-bold text-blue-900 border-b-2 border-blue-100 pb-2 mb-6 uppercase tracking-tight">
+          Section A: Personal Information
+        </h2>
 
-        // Signature Pad Logic
-        const canvas = document.getElementById('signature-pad');
-        const ctx = canvas.getContext('2d');
-        let drawing = false;
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="md:col-span-2">
+            <label class="block text-sm font-semibold text-gray-700 mb-1">Full Name *</label>
+            <input type="text" name="fullName" required class="form-input" placeholder="John Doe">
+          </div>
 
-        function startDrawing(e) {
-            drawing = true;
-            draw(e);
-        }
-        function stopDrawing() { drawing = false; ctx.beginPath(); }
-        function draw(e) {
-            if (!drawing) return;
-            const rect = canvas.getBoundingClientRect();
-            const x = (e.clientX || e.touches[0].clientX) - rect.left;
-            const y = (e.clientY || e.touches[0].clientY) - rect.top;
-            ctx.lineWidth = 2;
-            ctx.lineCap = 'round';
-            ctx.lineTo(x, y);
-            ctx.stroke();
-            ctx.beginPath();
-            ctx.moveTo(x, y);
-        }
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-1">ID/Passport Number *</label>
+            <input type="text" name="idNumber" required class="form-input">
+          </div>
 
-        canvas.addEventListener('mousedown', startDrawing);
-        canvas.addEventListener('mousemove', draw);
-        window.addEventListener('mouseup', stopDrawing);
-        canvas.addEventListener('touchstart', (e) => { e.preventDefault(); startDrawing(e.touches[0]); });
-        canvas.addEventListener('touchmove', (e) => { e.preventDefault(); draw(e.touches[0]); });
-        canvas.addEventListener('touchend', stopDrawing);
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-1">Gender</label>
+            <select name="gender" class="form-input">
+              <option value="">Select Gender</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
 
-        function clearSignature() { ctx.clearRect(0, 0, canvas.width, canvas.height); }
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-1">Date of Birth</label>
+            <input type="date" name="dob" class="form-input">
+          </div>
 
-        // Navigation Logic
-        function nextStep(step) {
-            for(let i=1; i<=4; i++) {
-                document.getElementById('step' + i).classList.add('step-hidden');
-            }
-            document.getElementById('step' + step).classList.remove('step-hidden');
-            document.getElementById('progress').style.width = (step * 25) + '%';
-        }
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-1">Phone Number *</label>
+            <input type="tel" name="phone" required class="form-input" placeholder="0712345678">
+          </div>
 
-        // Form Submission Logic
-        const form = document.getElementById('registrationForm');
-        form.addEventListener('submit', e => {
-            e.preventDefault();
-            
-            if (SCRIPT_URL === "https://script.google.com/macros/s/AKfycbz1E3caPwUki4braeyhcA18DJN_VK4KhBvfVvixGDw/dev") {
-                alert("Wait! You forgot Step 4. You need to paste your Google Script link in the code first.");
-                return;
-            }
+          <div class="md:col-span-2">
+            <label class="block text-sm font-semibold text-gray-700 mb-1">Email Address *</label>
+            <input type="email" name="email" required class="form-input" placeholder="email@example.com">
+          </div>
 
-            document.getElementById('loading').classList.remove('step-hidden');
-            
-            const formData = new FormData(form);
-            const data = Object.fromEntries(formData.entries());
-            data.signature = canvas.toDataURL(); // Convert drawing to image data
+          <div class="md:col-span-2">
+            <label class="block text-sm font-semibold text-gray-700 mb-1">Postal Address</label>
+            <input type="text" name="postalAddress" class="form-input" placeholder="P.O. Box ...">
+          </div>
 
-            fetch(SCRIPT_URL, {
-                method: 'POST',
-                body: new URLSearchParams(data)
-            })
-            .then(res => {
-                document.getElementById('loading').classList.add('step-hidden');
-                form.classList.add('step-hidden');
-                document.getElementById('success').classList.remove('step-hidden');
-            })
-            .catch(error => {
-                document.getElementById('loading').classList.add('step-hidden');
-                alert('Something went wrong. Please try again.');
-                console.error('Error!', error.message);
-            });
-        });
-    </script>
+          <div class="md:col-span-2">
+            <label class="block text-sm font-semibold text-gray-700 mb-1">Physical Address / Residence</label>
+            <input type="text" name="residence" class="form-input">
+          </div>
+
+          <div class="md:col-span-2">
+            <label class="block text-sm font-semibold text-gray-700 mb-1">Occupation / Employer</label>
+            <input type="text" name="occupationEmployer" class="form-input">
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION B -->
+      <section>
+        <h2 class="text-lg font-bold text-blue-900 border-b-2 border-blue-100 pb-2 mb-6 uppercase tracking-tight">
+          Section B: Membership Details
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-1">Date of Joining</label>
+            <input type="date" name="dateOfJoining" class="form-input">
+          </div>
+
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-1">Membership Number (office use)</label>
+            <input type="text" name="membershipNumber" class="form-input" placeholder="(office use)">
+          </div>
+
+          <div class="md:col-span-2">
+            <label class="block text-sm font-semibold text-gray-700 mb-1">Next of Kin</label>
+            <input type="text" name="nextOfKin" class="form-input">
+          </div>
+
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-1">Relationship</label>
+            <input type="text" name="relationship" class="form-input">
+          </div>
+
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-1">Next of Kin Contact</label>
+            <input type="tel" name="kinContact" class="form-input" placeholder="07...">
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION C -->
+      <section class="bg-blue-50 p-6 rounded-xl border border-blue-100 space-y-4">
+        <h2 class="text-sm font-bold text-blue-900 uppercase">Section C: Declaration</h2>
+
+        <p class="text-sm text-blue-900 leading-relaxed">
+          I, the undersigned, hereby apply for membership in the BTL Welfare Association. I agree to abide by the BTL constitution,
+          code of conduct, and any decisions made by its duly elected officials. I agree to pay the member fees of
+          <strong>Ksh 5,000</strong> to the BTL Welfare Account <strong>MPESA Paybill 880100 Account 1006602438</strong>.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-1">Applicant’s Signature (Type your full name) *</label>
+            <input type="text" name="signatureName" required class="form-input" placeholder="Type your full name as signature">
+          </div>
+
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-1">Signature Date *</label>
+            <input type="date" name="signatureDate" required class="form-input">
+          </div>
+        </div>
+      </section>
+
+      <!-- DATA PRIVACY CONSENT -->
+      <section class="bg-white p-6 rounded-xl border border-gray-200 space-y-4">
+        <h2 class="text-sm font-bold text-gray-900 uppercase">Data Privacy Consent</h2>
+
+        <div class="text-sm text-gray-700 leading-relaxed space-y-3">
+          <p>
+            I, the undersigned hereby give my consent for the main committee to collect and receive my personal details
+            and/or documents required for the purposes of company registration and Medical Cover.
+          </p>
+
+          <p class="font-semibold">I understand that:</p>
+          <ul class="list-disc pl-6 space-y-2">
+            <li>The information will be sent to the committee’s official Gmail address: <strong>btlconsulting2025@gmail.com</strong></li>
+            <li>My personal details/documents will be used solely for the purpose of company registration and Medical Cover.</li>
+            <li>
+              My personal data shall be collected and processed in accordance with the Data Protection Act (DPA), 2019
+              together with the Data Protection Regulations (together referred to as “Data Legislation”) as may be amended from time to time.
+            </li>
+          </ul>
+
+          <p>
+            I confirm my consent and authorize the committee to receive and use my personal details/documents for the above stated purpose. *
+          </p>
+        </div>
+
+        <div class="flex items-center gap-6">
+          <label class="flex items-center gap-2 text-sm font-semibold text-gray-800">
+            <input type="radio" name="consentChoice" value="Yes" required class="h-4 w-4">
+            Yes
+          </label>
+          <label class="flex items-center gap-2 text-sm font-semibold text-gray-800">
+            <input type="radio" name="consentChoice" value="No" required class="h-4 w-4">
+            No
+          </label>
+        </div>
+      </section>
+
+      <!-- SUBMIT -->
+      <div>
+        <button type="submit" id="submitBtn"
+          class="w-full bg-blue-900 hover:bg-blue-800 text-white font-bold py-4 rounded-xl shadow-lg transition-all active:scale-95 flex items-center justify-center gap-3">
+          <span id="btnText">Submit Registration</span>
+          <div id="btnLoader" class="hidden loader ease-linear rounded-full border-2 border-t-2 border-gray-200 h-5 w-5"></div>
+        </button>
+      </div>
+    </form>
+
+    <div id="messageBox" class="hidden mx-8 mb-8 p-4 rounded-lg text-center font-medium"></div>
+  </div>
+
+  <script>
+    // PASTE YOUR GOOGLE APPS SCRIPT WEB APP /exec URL HERE:
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwecIQ92eujKNwBzH40_axyRNgvwVO2dnDklknlplb5JNpuTRiqORZRuTCZpsQwRDfZ/exec";
+
+    const form = document.getElementById('registrationForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const btnText = document.getElementById('btnText');
+    const btnLoader = document.getElementById('btnLoader');
+    const messageBox = document.getElementById('messageBox');
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      if (!SCRIPT_URL || SCRIPT_URL.includes("PASTE_YOUR_WEB_APP_EXEC_URL_HERE")) {
+        showMessage("Deployment Error: Paste your Google Apps Script Web App /exec URL into SCRIPT_URL.", "error");
+        return;
+      }
+
+      submitBtn.disabled = true;
+      btnText.textContent = "Processing...";
+      btnLoader.classList.remove('hidden');
+      messageBox.classList.add('hidden');
+
+      const formData = new FormData(form);
+
+      // IMPORTANT:
+      // Apps Script Web Apps often block cross-origin reads. no-cors reliably sends the request.
+      fetch(SCRIPT_URL, {
+        method: "POST",
+        body: formData,
+        mode: "no-cors"
+      })
+      .then(() => {
+        showMessage("Success! Your registration has been submitted successfully.", "success");
+        form.reset();
+      })
+      .catch((err) => {
+        console.error(err);
+        showMessage("There was an error submitting the form. Confirm the Web App deployment + access settings.", "error");
+      })
+      .finally(() => {
+        submitBtn.disabled = false;
+        btnText.textContent = "Submit Registration";
+        btnLoader.classList.add('hidden');
+      });
+    });
+
+    function showMessage(text, type) {
+      messageBox.textContent = text;
+      messageBox.classList.remove('hidden', 'bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800');
+
+      if (type === 'success') messageBox.classList.add('bg-green-100', 'text-green-800');
+      else messageBox.classList.add('bg-red-100', 'text-red-800');
+
+      messageBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  </script>
 </body>
 </html>
