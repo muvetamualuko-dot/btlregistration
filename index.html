@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BTL Welfare Registration</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
@@ -26,6 +26,7 @@
 </head>
 
 <body class="bg-slate-50 min-h-screen py-12 px-4">
+
   <div class="max-w-3xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden">
     <div class="bg-blue-900 px-8 py-10 text-white text-center">
       <h1 class="text-3xl font-bold uppercase tracking-wider">BTL Welfare Group</h1>
@@ -33,7 +34,8 @@
     </div>
 
     <form id="registrationForm" class="p-8 space-y-10">
-      <!-- SECTION A -->
+
+      <!-- Section A -->
       <section>
         <h2 class="text-lg font-bold text-blue-900 border-b-2 border-blue-100 pb-2 mb-6 uppercase tracking-tight">
           Section A: Personal Information
@@ -77,7 +79,7 @@
 
           <div class="md:col-span-2">
             <label class="block text-sm font-semibold text-gray-700 mb-1">Postal Address</label>
-            <input type="text" name="postalAddress" class="form-input" placeholder="P.O. Box ...">
+            <input type="text" name="postalAddress" class="form-input">
           </div>
 
           <div class="md:col-span-2">
@@ -92,7 +94,7 @@
         </div>
       </section>
 
-      <!-- SECTION B -->
+      <!-- Section B -->
       <section>
         <h2 class="text-lg font-bold text-blue-900 border-b-2 border-blue-100 pb-2 mb-6 uppercase tracking-tight">
           Section B: Membership Details
@@ -106,7 +108,7 @@
 
           <div>
             <label class="block text-sm font-semibold text-gray-700 mb-1">Membership Number (office use)</label>
-            <input type="text" name="membershipNumber" class="form-input" placeholder="(office use)">
+            <input type="text" name="membershipNumber" class="form-input">
           </div>
 
           <div class="md:col-span-2">
@@ -121,25 +123,24 @@
 
           <div>
             <label class="block text-sm font-semibold text-gray-700 mb-1">Next of Kin Contact</label>
-            <input type="tel" name="kinContact" class="form-input" placeholder="07...">
+            <input type="tel" name="kinContact" class="form-input">
           </div>
         </div>
       </section>
 
-      <!-- SECTION C -->
+      <!-- Section C -->
       <section class="bg-blue-50 p-6 rounded-xl border border-blue-100 space-y-4">
         <h2 class="text-sm font-bold text-blue-900 uppercase">Section C: Declaration</h2>
 
         <p class="text-sm text-blue-900 leading-relaxed">
-          I, the undersigned, hereby apply for membership in the BTL Welfare Association. I agree to abide by the BTL constitution,
-          code of conduct, and any decisions made by its duly elected officials. I agree to pay the member fees of
+          I agree to abide by the BTL constitution and code of conduct. I agree to pay the member fees of
           <strong>Ksh 5,000</strong> to the BTL Welfare Account <strong>MPESA Paybill 880100 Account 1006602438</strong>.
         </p>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
           <div>
             <label class="block text-sm font-semibold text-gray-700 mb-1">Applicant’s Signature (Type your full name) *</label>
-            <input type="text" name="signatureName" required class="form-input" placeholder="Type your full name as signature">
+            <input type="text" name="signatureName" required class="form-input">
           </div>
 
           <div>
@@ -149,7 +150,7 @@
         </div>
       </section>
 
-      <!-- DATA PRIVACY CONSENT -->
+      <!-- Data Privacy Consent -->
       <section class="bg-white p-6 rounded-xl border border-gray-200 space-y-4">
         <h2 class="text-sm font-bold text-gray-900 uppercase">Data Privacy Consent</h2>
 
@@ -163,10 +164,7 @@
           <ul class="list-disc pl-6 space-y-2">
             <li>The information will be sent to the committee’s official Gmail address: <strong>btlconsulting2025@gmail.com</strong></li>
             <li>My personal details/documents will be used solely for the purpose of company registration and Medical Cover.</li>
-            <li>
-              My personal data shall be collected and processed in accordance with the Data Protection Act (DPA), 2019
-              together with the Data Protection Regulations (together referred to as “Data Legislation”) as may be amended from time to time.
-            </li>
+            <li>My personal data shall be collected and processed in accordance with the Data Protection Act (DPA), 2019 and related regulations.</li>
           </ul>
 
           <p>
@@ -186,22 +184,23 @@
         </div>
       </section>
 
-      <!-- SUBMIT -->
-      <div>
+      <!-- Submit -->
+      <div class="pt-2">
         <button type="submit" id="submitBtn"
           class="w-full bg-blue-900 hover:bg-blue-800 text-white font-bold py-4 rounded-xl shadow-lg transition-all active:scale-95 flex items-center justify-center gap-3">
           <span id="btnText">Submit Registration</span>
           <div id="btnLoader" class="hidden loader ease-linear rounded-full border-2 border-t-2 border-gray-200 h-5 w-5"></div>
         </button>
       </div>
+
     </form>
 
     <div id="messageBox" class="hidden mx-8 mb-8 p-4 rounded-lg text-center font-medium"></div>
   </div>
 
   <script>
-    // PASTE YOUR GOOGLE APPS SCRIPT WEB APP /exec URL HERE:
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwecIQ92eujKNwBzH40_axyRNgvwVO2dnDklknlplb5JNpuTRiqORZRuTCZpsQwRDfZ/exec";
+    // PASTE your Apps Script Web App /exec URL:
+    const SCRIPT_URL = "PASTE_YOUR_WEB_APP_EXEC_URL_HERE";
 
     const form = document.getElementById('registrationForm');
     const submitBtn = document.getElementById('submitBtn');
@@ -209,7 +208,7 @@
     const btnLoader = document.getElementById('btnLoader');
     const messageBox = document.getElementById('messageBox');
 
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
 
       if (!SCRIPT_URL || SCRIPT_URL.includes("PASTE_YOUR_WEB_APP_EXEC_URL_HERE")) {
@@ -222,39 +221,42 @@
       btnLoader.classList.remove('hidden');
       messageBox.classList.add('hidden');
 
-      const formData = new FormData(form);
+      try {
+        const fd = new FormData(form);
+        const payload = Object.fromEntries(fd.entries());
 
-      // IMPORTANT:
-      // Apps Script Web Apps often block cross-origin reads. no-cors reliably sends the request.
-      fetch(SCRIPT_URL, {
-        method: "POST",
-        body: formData,
-        mode: "no-cors"
-      })
-      .then(() => {
+        const res = await fetch(SCRIPT_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "Accept": "application/json" },
+          body: JSON.stringify(payload)
+        });
+
+        const json = await res.json();
+        if (!res.ok || json.result !== "success") {
+          throw new Error(json.error || "Submission failed");
+        }
+
         showMessage("Success! Your registration has been submitted successfully.", "success");
         form.reset();
-      })
-      .catch((err) => {
+
+      } catch (err) {
         console.error(err);
-        showMessage("There was an error submitting the form. Confirm the Web App deployment + access settings.", "error");
-      })
-      .finally(() => {
+        showMessage("Submission failed: " + err.message, "error");
+      } finally {
         submitBtn.disabled = false;
         btnText.textContent = "Submit Registration";
         btnLoader.classList.add('hidden');
-      });
+      }
     });
 
     function showMessage(text, type) {
       messageBox.textContent = text;
       messageBox.classList.remove('hidden', 'bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800');
-
       if (type === 'success') messageBox.classList.add('bg-green-100', 'text-green-800');
       else messageBox.classList.add('bg-red-100', 'text-red-800');
-
       messageBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
   </script>
+
 </body>
 </html>
