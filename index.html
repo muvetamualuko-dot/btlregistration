@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>BTL Welfare Registration</title>
-   <style>
+
+  <!-- Tailwind: required for all your utility classes -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
     body { font-family: 'Inter', sans-serif; }
+
     .form-input{
       width:100%;
       padding:.75rem 1rem;
@@ -15,6 +19,7 @@
       border:1px solid #d1d5db;
       outline:none;
       transition:all .2s ease;
+      background:white;
     }
     .form-input:focus{
       border-color:transparent;
@@ -28,6 +33,7 @@
 <body class="bg-slate-50 min-h-screen py-12 px-4">
 
   <div class="max-w-3xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden">
+    <!-- Header -->
     <div class="bg-blue-900 px-8 py-10 text-white text-center">
       <h1 class="text-3xl font-bold uppercase tracking-wider">BTL Welfare Group</h1>
       <p class="text-blue-200 mt-2 font-light">Membership Registration Form</p>
@@ -44,12 +50,12 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div class="md:col-span-2">
             <label class="block text-sm font-semibold text-gray-700 mb-1">Full Name *</label>
-            <input type="text" name="fullName" required class="form-input" placeholder="John Doe">
+            <input type="text" name="fullName" required class="form-input" placeholder="John Doe" />
           </div>
 
           <div>
             <label class="block text-sm font-semibold text-gray-700 mb-1">ID/Passport Number *</label>
-            <input type="text" name="idNumber" required class="form-input">
+            <input type="text" name="idNumber" required class="form-input" />
           </div>
 
           <div>
@@ -64,32 +70,32 @@
 
           <div>
             <label class="block text-sm font-semibold text-gray-700 mb-1">Date of Birth</label>
-            <input type="date" name="dob" class="form-input">
+            <input type="date" name="dob" class="form-input" />
           </div>
 
           <div>
             <label class="block text-sm font-semibold text-gray-700 mb-1">Phone Number *</label>
-            <input type="tel" name="phone" required class="form-input" placeholder="0712345678">
+            <input type="tel" name="phone" required class="form-input" placeholder="0712345678" />
           </div>
 
           <div class="md:col-span-2">
             <label class="block text-sm font-semibold text-gray-700 mb-1">Email Address *</label>
-            <input type="email" name="email" required class="form-input" placeholder="email@example.com">
+            <input type="email" name="email" required class="form-input" placeholder="email@example.com" />
           </div>
 
           <div class="md:col-span-2">
             <label class="block text-sm font-semibold text-gray-700 mb-1">Postal Address</label>
-            <input type="text" name="postalAddress" class="form-input">
+            <input type="text" name="postalAddress" class="form-input" />
           </div>
 
           <div class="md:col-span-2">
             <label class="block text-sm font-semibold text-gray-700 mb-1">Physical Address / Residence</label>
-            <input type="text" name="residence" class="form-input">
+            <input type="text" name="residence" class="form-input" />
           </div>
 
           <div class="md:col-span-2">
             <label class="block text-sm font-semibold text-gray-700 mb-1">Occupation / Employer</label>
-            <input type="text" name="occupationEmployer" class="form-input">
+            <input type="text" name="occupationEmployer" class="form-input" />
           </div>
         </div>
       </section>
@@ -103,27 +109,27 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <label class="block text-sm font-semibold text-gray-700 mb-1">Date of Joining</label>
-            <input type="date" name="dateOfJoining" class="form-input">
+            <input type="date" name="dateOfJoining" class="form-input" />
           </div>
 
           <div>
             <label class="block text-sm font-semibold text-gray-700 mb-1">Membership Number (office use)</label>
-            <input type="text" name="membershipNumber" class="form-input">
+            <input type="text" name="membershipNumber" class="form-input" />
           </div>
 
           <div class="md:col-span-2">
             <label class="block text-sm font-semibold text-gray-700 mb-1">Next of Kin</label>
-            <input type="text" name="nextOfKin" class="form-input">
+            <input type="text" name="nextOfKin" class="form-input" />
           </div>
 
           <div>
             <label class="block text-sm font-semibold text-gray-700 mb-1">Relationship</label>
-            <input type="text" name="relationship" class="form-input">
+            <input type="text" name="relationship" class="form-input" />
           </div>
 
           <div>
             <label class="block text-sm font-semibold text-gray-700 mb-1">Next of Kin Contact</label>
-            <input type="tel" name="kinContact" class="form-input">
+            <input type="tel" name="kinContact" class="form-input" />
           </div>
         </div>
       </section>
@@ -134,18 +140,26 @@
 
         <p class="text-sm text-blue-900 leading-relaxed">
           I agree to abide by the BTL constitution and code of conduct. I agree to pay the member fees of
-          <strong>Ksh 5,000</strong> to the BTL Welfare Account <strong>MPESA Paybill 880100 Account 1006602438</strong>.
+          <strong>Ksh 5,000</strong> to the BTL Welfare Account
+          <strong>MPESA Paybill 880100 Account 1006602438</strong>.
         </p>
+
+        <div class="mt-2 flex items-start">
+          <input id="confirmTerms" type="checkbox" required class="mt-1 h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
+          <label for="confirmTerms" class="ml-2 text-sm text-gray-700">
+            I confirm the information above is accurate and I accept the terms of membership.
+          </label>
+        </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
           <div>
             <label class="block text-sm font-semibold text-gray-700 mb-1">Applicant’s Signature (Type your full name) *</label>
-            <input type="text" name="signatureName" required class="form-input">
+            <input type="text" name="signatureName" required class="form-input" />
           </div>
 
           <div>
             <label class="block text-sm font-semibold text-gray-700 mb-1">Signature Date *</label>
-            <input type="date" name="signatureDate" required class="form-input">
+            <input type="date" name="signatureDate" required class="form-input" />
           </div>
         </div>
       </section>
@@ -164,7 +178,10 @@
           <ul class="list-disc pl-6 space-y-2">
             <li>The information will be sent to the committee’s official Gmail address: <strong>btlconsulting2025@gmail.com</strong></li>
             <li>My personal details/documents will be used solely for the purpose of company registration and Medical Cover.</li>
-            <li>My personal data shall be collected and processed in accordance with the Data Protection Act (DPA), 2019 and related regulations.</li>
+            <li>
+              My personal data shall be collected and processed in accordance with the provisions of the Data Protection Act (DPA), 2019
+              together with the Data Protection Regulations (together referred to as “Data Legislation”) as may be amended from time to time.
+            </li>
           </ul>
 
           <p>
@@ -174,11 +191,11 @@
 
         <div class="flex items-center gap-6">
           <label class="flex items-center gap-2 text-sm font-semibold text-gray-800">
-            <input type="radio" name="consentChoice" value="Yes" required class="h-4 w-4">
+            <input type="radio" name="consentChoice" value="Yes" required class="h-4 w-4" />
             Yes
           </label>
           <label class="flex items-center gap-2 text-sm font-semibold text-gray-800">
-            <input type="radio" name="consentChoice" value="No" required class="h-4 w-4">
+            <input type="radio" name="consentChoice" value="No" required class="h-4 w-4" />
             No
           </label>
         </div>
@@ -199,86 +216,83 @@
   </div>
 
   <script>
-  // USE THE WORKING /exec URL THAT RETURNS {"ok":true,...} IN YOUR BROWSER
-  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz6G4NEtQ6xwsJHiiJwAQ7a1IkGMndt5hDoszyGt-rS81DjBZDe6-2siKSQ2CB6_zea/exec";
+    // IMPORTANT: Use the SAME /exec URL that returns {"ok":true,...} in your browser
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw46BCu3ATXvvevZxjEkQgBN80o1XznXj59IoSmHWenRMZ7ZBmOfknQTkesH5qGLfoA/exec";
 
-  // Live proof
-  document.body.insertAdjacentHTML(
-    "afterbegin",
-    `<div style="position:fixed;top:0;left:0;right:0;z-index:999999;background:#111;color:#0f0;padding:8px;font:12px monospace;">
-      LIVE BUILD CHECK: ${new Date().toISOString()} — ${SCRIPT_URL}
-    </div>`
-  );
+    // Live proof (remove later)
+    document.body.insertAdjacentHTML(
+      "afterbegin",
+      `<div style="position:fixed;top:0;left:0;right:0;z-index:999999;background:#111;color:#0f0;padding:8px;font:12px monospace;">
+        LIVE BUILD CHECK: ${new Date().toISOString()} — ${SCRIPT_URL}
+      </div>`
+    );
 
-  const form = document.getElementById("registrationForm");
-  const submitBtn = document.getElementById("submitBtn");
-  const btnText = document.getElementById("btnText");
-  const btnLoader = document.getElementById("btnLoader");
-  const messageBox = document.getElementById("messageBox");
+    const form = document.getElementById("registrationForm");
+    const submitBtn = document.getElementById("submitBtn");
+    const btnText = document.getElementById("btnText");
+    const btnLoader = document.getElementById("btnLoader");
+    const messageBox = document.getElementById("messageBox");
 
-  // Create a hidden iframe to receive the submission response
-  const iframe = document.createElement("iframe");
-  iframe.name = "hidden_iframe";
-  iframe.style.display = "none";
-  document.body.appendChild(iframe);
+    // Hidden iframe avoids CORS and guarantees the POST actually happens as a normal form submission
+    const iframe = document.createElement("iframe");
+    iframe.name = "hidden_iframe";
+    iframe.style.display = "none";
+    document.body.appendChild(iframe);
 
-  let submitted = false;
+    let awaitingResponse = false;
 
-  iframe.addEventListener("load", () => {
-    if (!submitted) return; // ignore initial load
-    submitted = false;
+    iframe.addEventListener("load", () => {
+      if (!awaitingResponse) return;
+      awaitingResponse = false;
 
-    // If doPost runs, the iframe loads a response -> we treat that as success signal
-    showMessage("Submitted successfully. Please check the Google Sheet for the new entry.", "success");
-    form.reset();
+      // If doPost runs, the iframe loads whatever response it returned
+      showMessage("Submitted successfully. Now check the Google Sheet for the new entry.", "success");
+      form.reset();
 
-    submitBtn.disabled = false;
-    btnText.textContent = "Submit Registration";
-    btnLoader.classList.add("hidden");
-  });
-
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-
-    // Strong validation
-    if (!SCRIPT_URL || !SCRIPT_URL.startsWith("https://script.google.com/macros/s/") || !SCRIPT_URL.endsWith("/exec")) {
-      showMessage("Invalid backend URL configured.", "error");
-      return;
-    }
-
-    submitBtn.disabled = true;
-    btnText.textContent = "Processing...";
-    btnLoader.classList.remove("hidden");
-    messageBox.classList.add("hidden");
-
-    // Submit like a normal HTML form (no CORS issues)
-    form.action = SCRIPT_URL;
-    form.method = "POST";
-    form.target = "hidden_iframe";
-
-    submitted = true;
-    form.submit();
-
-    // Safety timeout: if iframe doesn't load, something blocked the request
-    setTimeout(() => {
-      if (!submitted) return;
-      submitted = false;
       submitBtn.disabled = false;
       btnText.textContent = "Submit Registration";
       btnLoader.classList.add("hidden");
-      showMessage("Submission may have been blocked. Check Apps Script → Executions. If none, the endpoint is still not reachable.", "error");
-    }, 12000);
-  });
+    });
 
-  function showMessage(text, type) {
-    messageBox.textContent = text;
-    messageBox.classList.remove("hidden", "bg-green-100", "text-green-800", "bg-red-100", "text-red-800");
-    if (type === "success") messageBox.classList.add("bg-green-100", "text-green-800");
-    else messageBox.classList.add("bg-red-100", "text-red-800");
-    messageBox.scrollIntoView({ behavior: "smooth", block: "center" });
-  }
-</script>
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
 
+      if (!SCRIPT_URL.startsWith("https://script.google.com/macros/s/") || !SCRIPT_URL.endsWith("/exec")) {
+        showMessage("Invalid SCRIPT_URL. It must be a Google Apps Script /exec URL.", "error");
+        return;
+      }
 
+      submitBtn.disabled = true;
+      btnText.textContent = "Processing...";
+      btnLoader.classList.remove("hidden");
+      messageBox.classList.add("hidden");
+
+      // Set form submission to Apps Script endpoint
+      form.action = SCRIPT_URL;
+      form.method = "POST";
+      form.target = "hidden_iframe";
+
+      awaitingResponse = true;
+      form.submit();
+
+      // Timeout guard: if no iframe load occurs, submission was blocked
+      setTimeout(() => {
+        if (!awaitingResponse) return;
+        awaitingResponse = false;
+        submitBtn.disabled = false;
+        btnText.textContent = "Submit Registration";
+        btnLoader.classList.add("hidden");
+        showMessage("Submission may have been blocked. Check Apps Script → Executions (doPost) for errors.", "error");
+      }, 15000);
+    });
+
+    function showMessage(text, type) {
+      messageBox.textContent = text;
+      messageBox.classList.remove("hidden", "bg-green-100", "text-green-800", "bg-red-100", "text-red-800");
+      if (type === "success") messageBox.classList.add("bg-green-100", "text-green-800");
+      else messageBox.classList.add("bg-red-100", "text-red-800");
+      messageBox.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  </script>
 </body>
 </html>
