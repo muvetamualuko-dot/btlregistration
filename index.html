@@ -208,52 +208,48 @@
     </div>`
   );
 
-  const form = document.getElementById("registrationForm");
-  const submitBtn = document.getElementById("submitBtn");
-  const btnText = document.getElementById("btnText");
-  const btnLoader = document.getElementById("btnLoader");
-  const messageBox = document.getElementById("messageBox");
+ 
+const form = document.getElementById("registrationForm");
+const submitBtn = document.getElementById("submitBtn");
+const btnText = document.getElementById("btnText");
+const btnLoader = document.getElementById("btnLoader");
+const messageBox = document.getElementById("messageBox");
 
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
+ form.addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-    // Strong validation only
-    if (!SCRIPT_URL || !SCRIPT_URL.startsWith("https://script.google.com/macros/s/") || !SCRIPT_URL.endsWith("/exec")) {
-      showMessage("Invalid backend URL configured.", "error");
-      return;
-    }
+  if (!SCRIPT_URL || SCRIPT_URL.includes("https://script.google.com/macros/s/AKfycbxXjQAsxrjnXhomZMBTf851K51_AW_f6iDDHHw39BiqyN51aY-po4L5fG4mZo-6--er/exec")) {
+    showMessage("Deployment Error: Set SCRIPT_URL to your Apps Script /exec URL.", "error");
+    return;
+  }
 
-    submitBtn.disabled = true;
-    btnText.textContent = "Processing...";
-    btnLoader.classList.remove("hidden");
-    messageBox.classList.add("hidden");
+  submitBtn.disabled = true;
+  btnText.textContent = "Processing...";
+  btnLoader.classList.remove("hidden");
+  messageBox.classList.add("hidden");
 
-    try {
-      const formData = new FormData(form);
+  try {
+    const formData = new FormData(form);
 
-      // IMPORTANT: no custom headers (avoids CORS preflight)
-      const res = await fetch(SCRIPT_URL, {
-        method: "POST",
-        body: formData
-      });
+    await fetch(SCRIPT_URL, {
+      method: "POST",
+      body: formData,
+      mode: "no-cors" // IMPORTANT for GitHub Pages -> Apps Script
+    });
 
-      const json = await res.json().catch(() => null);
-      if (!json || json.result !== "success") {
-        throw new Error((json && json.error) ? json.error : "Server did not confirm success.");
-      }
+    showMessage("Submitted. If it doesn't appear in the sheet, check Apps Script → Executions for errors.", "success");
+    form.reset();
 
-      showMessage("Success! Your registration has been submitted successfully.", "success");
-      form.reset();
+  } catch (err) {
+    console.error(err);
+    showMessage("Submission failed: " + err.message, "error");
+  } finally {
+    submitBtn.disabled = false;
+    btnText.textContent = "Submit Registration";
+    btnLoader.classList.add("hidden");
+  }
+});
 
-    } catch (err) {
-      console.error(err);
-      showMessage("Submission failed: " + err.message, "error");
-    } finally {
-      submitBtn.disabled = false;
-      btnText.textContent = "Submit Registration";
-      btnLoader.classList.add("hidden");
-    }
-  });
 
   function showMessage(text, type) {
     messageBox.textContent = text;
