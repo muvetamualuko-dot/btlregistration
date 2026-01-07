@@ -200,10 +200,14 @@
 
   <script>
     // PASTE your Apps Script Web App /exec URL:
-  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz6G4NEtQ6xwsJHiiJwAQ7a1IkGMndt5hDoszyGt-rS81DjBZDe6-2siKSQ2CB6_zea/exec";
-document.body.insertAdjacentHTML("afterbegin",
-  "<div style='position:fixed;top:0;left:0;right:0;z-index:9999;background:#000;color:#fff;padding:6px;font:12px monospace;'>SCRIPT_URL LOADED: " +
-  SCRIPT_URL + "</div>"
+ const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz6G4NEtQ6xwsJHiiJwAQ7a1IkGMndt5hDoszyGt-rS81DjBZDe6-2siKSQ2CB6_zea/exec";
+
+// HARD PROOF this file is live:
+document.body.insertAdjacentHTML(
+  "afterbegin",
+  `<div style="position:fixed;top:0;left:0;right:0;z-index:999999;background:#111;color:#0f0;padding:8px;font:12px monospace;">
+     LIVE BUILD CHECK: ${new Date().toISOString()} — ${SCRIPT_URL}
+   </div>`
 );
 
     const form = document.getElementById('registrationForm');
