@@ -200,8 +200,9 @@
 
   <script>
     // PASTE your Apps Script Web App /exec URL:
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz6G4NEtQ6xwsJHiiJwAQ7a1IkGMndt5hDoszyGt-rS81DjBZDe6-2siKSQ2CB6_zea/exec";
-
+   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz6G4NEtQ6xwsJHiiJwAQ7a1IkGMndt5hDoszyGt-rS81DjBZDe6-2siKSQ2CB6_zea/exec";
+  console.log("SCRIPT_URL:", SCRIPT_URL);
+  document.title = "BTL (" + SCRIPT_URL.slice(-8) + ")";
     const form = document.getElementById('registrationForm');
     const submitBtn = document.getElementById('submitBtn');
     const btnText = document.getElementById('btnText');
