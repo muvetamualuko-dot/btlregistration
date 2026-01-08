@@ -231,6 +231,19 @@
     const btnText = document.getElementById("btnText");
     const btnLoader = document.getElementById("btnLoader");
     const messageBox = document.getElementById("messageBox");
+(function setTodayDefaults() {
+  const today = new Date();
+  const yyyy = today.getFullYear();
+  const mm = String(today.getMonth() + 1).padStart(2, "0");
+  const dd = String(today.getDate()).padStart(2, "0");
+  const iso = `${yyyy}-${mm}-${dd}`;
+
+  const doj = document.getElementById("dateOfJoining");
+  const sig = document.getElementById("signatureDate");
+
+  if (doj && !doj.value) doj.value = iso;
+  if (sig && !sig.value) sig.value = iso;
+})();
 
     // Hidden iframe avoids CORS and guarantees the POST actually happens as a normal form submission
     const iframe = document.createElement("iframe");
