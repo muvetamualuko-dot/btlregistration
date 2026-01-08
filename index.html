@@ -219,13 +219,7 @@
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwxOub81OY-x5oLE7QE1fmDcUffegxszVJ9BG_e-ZkdrFAH02-zEFdqGNwv2mPqJ4p8/exec";
 
     // Live proof (remove later)
-    document.body.insertAdjacentHTML(
-      "afterbegin",
-      `<div style="position:fixed;top:0;left:0;right:0;z-index:999999;background:#111;color:#0f0;padding:8px;font:12px monospace;">
-        LIVE BUILD CHECK: ${new Date().toISOString()} — ${SCRIPT_URL}
-      </div>`
-    );
-
+ 
     const form = document.getElementById("registrationForm");
     const submitBtn = document.getElementById("submitBtn");
     const btnText = document.getElementById("btnText");
