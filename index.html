@@ -58,16 +58,15 @@
             <input type="text" name="idNumber" required class="form-input" />
           </div>
 
-          <div>
-            <label class="block text-sm font-semibold text-gray-700 mb-1">Gender</label>
-            <select name="gender" class="form-input">
-              <option value="">Select Gender</option>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-              <option value="Other">Other</option>
-            </select>
-          </div>
-
+        
+<div>
+  <label class="block text-sm font-semibold text-gray-700 mb-1">Gender</label>
+  <select name="gender" class="form-input" required>
+    <option value="">Select Gender</option>
+    <option value="Male">Male</option>
+    <option value="Female">Female</option>
+  </select>
+</div>
           <div>
             <label class="block text-sm font-semibold text-gray-700 mb-1">Date of Birth</label>
             <input type="date" name="dob" class="form-input" />
@@ -109,7 +108,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <label class="block text-sm font-semibold text-gray-700 mb-1">Date of Joining</label>
-            <input type="date" name="dateOfJoining" class="form-input" />
+           <input type="date" id="dateOfJoining" name="dateOfJoining" class="form-input" />
           </div>
 
           <div>
@@ -139,7 +138,7 @@
         <h2 class="text-sm font-bold text-blue-900 uppercase">Section C: Declaration</h2>
 
         <p class="text-sm text-blue-900 leading-relaxed">
-          I agree to abide by the BTL constitution and code of conduct. I agree to pay the member fees of
+          I agree to abide by the BTL Welfare Group constitution and code of conduct. I agree to pay the member fees of
           <strong>Ksh 5,000</strong> to the BTL Welfare Account
           <strong>MPESA Paybill 880100 Account 1006602438</strong>.
         </p>
@@ -159,7 +158,7 @@
 
           <div>
             <label class="block text-sm font-semibold text-gray-700 mb-1">Signature Date *</label>
-            <input type="date" name="signatureDate" required class="form-input" />
+            <input type="date" id="signatureDate" name="signatureDate" required class="form-input" />
           </div>
         </div>
       </section>
@@ -171,13 +170,13 @@
         <div class="text-sm text-gray-700 leading-relaxed space-y-3">
           <p>
             I, the undersigned hereby give my consent for the main committee to collect and receive my personal details
-            and/or documents required for the purposes of company registration and Medical Cover.
+            and/or documents required for the purposes of provision of Medical Cover.
           </p>
 
           <p class="font-semibold">I understand that:</p>
           <ul class="list-disc pl-6 space-y-2">
             <li>The information will be sent to the committee’s official Gmail address: <strong>btlconsulting2025@gmail.com</strong></li>
-            <li>My personal details/documents will be used solely for the purpose of company registration and Medical Cover.</li>
+            <li>My personal details/documents will be used solely for the purpose of provision of the Medical Cover.</li>
             <li>
               My personal data shall be collected and processed in accordance with the provisions of the Data Protection Act (DPA), 2019
               together with the Data Protection Regulations (together referred to as “Data Legislation”) as may be amended from time to time.
@@ -246,7 +245,7 @@
       awaitingResponse = false;
 
       // If doPost runs, the iframe loads whatever response it returned
-      showMessage("Submitted successfully. Now check the Google Sheet for the new entry.", "success");
+      showMessage("Submitted successfully.", "success");
       form.reset();
 
       submitBtn.disabled = false;
